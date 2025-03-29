@@ -3,4 +3,8 @@ class Time {
   int hours;
   int minutes;
   int seconds;
+  @override
+  String toString() {
+    return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+  }
 }

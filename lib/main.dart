@@ -1,4 +1,4 @@
-import 'package:chess_clock_app/chess_clock.dart';
+import 'package:chess_clock_app/widgets/chess_clock.dart';
 import 'package:flutter/material.dart';
 
 void main() {
