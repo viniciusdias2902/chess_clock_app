@@ -1,18 +1,23 @@
 import 'dart:async';
 
 import 'package:chess_clock_app/models/time.dart';
-import 'package:chess_clock_app/widgets/clock.dart';
+import 'package:chess_clock_app/widgets/chess_clock/clock.dart';
+import 'package:chess_clock_app/widgets/chess_clock/clock_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ChessClock extends StatefulWidget {
-  const ChessClock({super.key});
+  const ChessClock({super.key, required this.time});
+  final Time time;
   @override
   State<ChessClock> createState() => _ChessClockState();
 }
 
 class _ChessClockState extends State<ChessClock> {
-  final _timePlayerOne = Time(hours: 0, minutes: 20, seconds: 0);
-  final _timePlayerTwo = Time(hours: 0, minutes: 20, seconds: 0);
+  late final Time _timePlayerOne;
+  late final Time _timePlayerTwo;
+  Color _playerOneColor = Color.fromARGB(255, 80, 250, 123);
+  Color _playerTwoColor = Color.fromARGB(255, 255, 85, 85);
   Timer? _activeTimer;
   bool isPlayerOneTurn = true;
 
@@ -21,6 +26,13 @@ class _ChessClockState extends State<ChessClock> {
 
   void switchPlayer() {
     setState(() {
+      if (isPlayerOneTurn) {
+        _playerOneColor = Color.fromARGB(255, 80, 250, 123);
+        _playerTwoColor = Color.fromARGB(255, 255, 85, 85);
+      } else {
+        _playerOneColor = Color.fromARGB(255, 255, 85, 85);
+        _playerTwoColor = Color.fromARGB(255, 80, 250, 123);
+      }
       isPlayerOneTurn = !isPlayerOneTurn;
     });
     startTimer();
@@ -64,27 +76,49 @@ class _ChessClockState extends State<ChessClock> {
   }
 
   @override
+  void initState() {
+    _timePlayerOne = widget.time;
+    _timePlayerTwo = widget.time;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 40, 42, 54),
       body: Column(
         children: [
           Expanded(
             child: Clock(
               time: _timePlayerOne,
-              isPlayerOneTurn: isPlayerOneTurn,
+              backgroundColor: _playerOneColor,
               onTap: switchPlayer,
             ),
           ),
-          Divider(
-            height: 10,
-            thickness: 10,
-            color: Color.fromARGB(255, 248, 248, 242),
+          Container(
+            decoration: BoxDecoration(color: Color.fromARGB(255, 40, 42, 54)),
+            padding: EdgeInsets.all(20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CLockIcon(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    'Chess Clock',
+                    style: GoogleFonts.tektur(
+                      color: Color.fromARGB(255, 255, 121, 198),
+                      fontSize: 30,
+                    ),
+                  ),
+                ),
+                CLockIcon(),
+              ],
+            ),
           ),
           Expanded(
             child: Clock(
               time: _timePlayerTwo,
-              isPlayerOneTurn: !isPlayerOneTurn,
+              backgroundColor: _playerTwoColor,
               onTap: switchPlayer,
             ),
           ),

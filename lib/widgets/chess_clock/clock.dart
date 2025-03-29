@@ -1,33 +1,33 @@
 import 'package:chess_clock_app/models/time.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Clock extends StatelessWidget {
   const Clock({
     required this.time,
-    required this.isPlayerOneTurn,
+    required this.backgroundColor,
     required this.onTap,
     super.key,
   });
   final Time time;
   final VoidCallback onTap;
-  final bool isPlayerOneTurn;
+  final Color backgroundColor;
+
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: Duration(milliseconds: 500),
       curve: Curves.easeInOut,
-      color:
-          isPlayerOneTurn
-              ? Color.fromARGB(255, 255, 85, 85)
-              : Color.fromARGB(255, 80, 250, 123),
+      color: backgroundColor,
       child: Center(
         child: GestureDetector(
-          onTap: isPlayerOneTurn ? onTap : null,
+          onTap: onTap,
           child: Text(
             time.toString(),
-            style: TextStyle(
+            style: GoogleFonts.orbitron(
               color: Color.fromARGB(255, 248, 248, 242),
-              fontSize: 42,
+              fontSize: 60,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
