@@ -77,53 +77,51 @@ class _ChessClockState extends State<ChessClock> {
 
   @override
   void initState() {
-    _timePlayerOne = widget.time;
-    _timePlayerTwo = widget.time;
+    _timePlayerOne = widget.time.copy();
+    _timePlayerTwo = widget.time.copy();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: Clock(
-              time: _timePlayerOne,
-              backgroundColor: _playerOneColor,
-              onTap: switchPlayer,
-            ),
+    return Column(
+      children: [
+        Expanded(
+          child: Clock(
+            time: _timePlayerOne,
+            backgroundColor: _playerOneColor,
+            onTap: switchPlayer,
           ),
-          Container(
-            decoration: BoxDecoration(color: Color.fromARGB(255, 40, 42, 54)),
-            padding: EdgeInsets.all(20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CLockIcon(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    'Chess Clock',
-                    style: GoogleFonts.tektur(
-                      color: Color.fromARGB(255, 255, 121, 198),
-                      fontSize: 30,
-                    ),
+        ),
+        Container(
+          decoration: BoxDecoration(color: Color.fromARGB(255, 40, 42, 54)),
+          padding: EdgeInsets.all(20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CLockIcon(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  'Chess Clock',
+                  style: GoogleFonts.tektur(
+                    color: Color.fromARGB(255, 255, 121, 198),
+                    fontSize: 30,
                   ),
                 ),
-                CLockIcon(),
-              ],
-            ),
+              ),
+              CLockIcon(),
+            ],
           ),
-          Expanded(
-            child: Clock(
-              time: _timePlayerTwo,
-              backgroundColor: _playerTwoColor,
-              onTap: switchPlayer,
-            ),
+        ),
+        Expanded(
+          child: Clock(
+            time: _timePlayerTwo,
+            backgroundColor: _playerTwoColor,
+            onTap: switchPlayer,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
