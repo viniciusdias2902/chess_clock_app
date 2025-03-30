@@ -29,24 +29,22 @@ class _ChessClockState extends State<ChessClock> {
       if (isPlayerOneTurn) {
         _playerOneColor = Color.fromARGB(255, 80, 250, 123);
         _playerTwoColor = Color.fromARGB(255, 255, 85, 85);
+        isPlayerOneTurn = !isPlayerOneTurn;
+        startTimer(_timePlayerOne);
       } else {
         _playerOneColor = Color.fromARGB(255, 255, 85, 85);
         _playerTwoColor = Color.fromARGB(255, 80, 250, 123);
+        isPlayerOneTurn = !isPlayerOneTurn;
+        startTimer(_timePlayerTwo);
       }
-      isPlayerOneTurn = !isPlayerOneTurn;
     });
-    startTimer();
   }
 
-  void startTimer() {
+  void startTimer(Time time) {
     _activeTimer?.cancel();
     _activeTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
-        if (!isPlayerOneTurn) {
-          validateAndUpdateTimer(_timePlayerOne, timer);
-        } else {
-          validateAndUpdateTimer(_timePlayerTwo, timer);
-        }
+        validateAndUpdateTimer(time, timer);
       });
     });
   }
@@ -92,7 +90,8 @@ class _ChessClockState extends State<ChessClock> {
             child: Clock(
               time: _timePlayerOne,
               backgroundColor: _playerOneColor,
-              onTap: switchPlayer,
+              onTap:
+                  isPlayerOneTurn ? switchPlayer : () => _activeTimer?.cancel(),
             ),
           ),
         ),
@@ -121,7 +120,8 @@ class _ChessClockState extends State<ChessClock> {
           child: Clock(
             time: _timePlayerTwo,
             backgroundColor: _playerTwoColor,
-            onTap: switchPlayer,
+            onTap:
+                !isPlayerOneTurn ? switchPlayer : () => _activeTimer?.cancel(),
           ),
         ),
       ],
