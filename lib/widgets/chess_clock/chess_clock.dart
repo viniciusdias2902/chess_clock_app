@@ -87,10 +87,13 @@ class _ChessClockState extends State<ChessClock> {
     return Column(
       children: [
         Expanded(
-          child: Clock(
-            time: _timePlayerOne,
-            backgroundColor: _playerOneColor,
-            onTap: switchPlayer,
+          child: RotatedBox(
+            quarterTurns: 2,
+            child: Clock(
+              time: _timePlayerOne,
+              backgroundColor: _playerOneColor,
+              onTap: switchPlayer,
+            ),
           ),
         ),
         Container(
