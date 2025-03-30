@@ -18,21 +18,23 @@ class _ChessClockState extends State<ChessClock> {
   Color _playerTwoColor = Color.fromARGB(255, 255, 85, 85);
   Timer? _activeTimer;
   bool isPlayerOneTurn = true;
-
+  bool isPlaying = false;
   Color backgroundColorPlayerOne = Color.fromARGB(255, 40, 42, 54);
   Color backgroundColorPlayerTwo = Color.fromARGB(255, 40, 42, 54);
 
   void switchPlayer() {
     setState(() {
-      if (isPlayerOneTurn) {
+      if (isPlayerOneTurn && !isPlaying) {
         _playerOneColor = Color.fromARGB(255, 80, 250, 123);
         _playerTwoColor = Color.fromARGB(255, 255, 85, 85);
         isPlayerOneTurn = !isPlayerOneTurn;
+        isPlaying = true;
         startTimer(_timePlayerOne);
-      } else {
+      } else if (!isPlayerOneTurn && !isPlaying) {
         _playerOneColor = Color.fromARGB(255, 255, 85, 85);
         _playerTwoColor = Color.fromARGB(255, 80, 250, 123);
         isPlayerOneTurn = !isPlayerOneTurn;
+        isPlaying = true;
         startTimer(_timePlayerTwo);
       }
     });
@@ -71,6 +73,11 @@ class _ChessClockState extends State<ChessClock> {
     }
   }
 
+  void stopTimer() {
+    _activeTimer?.cancel();
+    isPlaying = false;
+  }
+
   @override
   void initState() {
     _timePlayerOne = widget.time.copy();
@@ -88,8 +95,7 @@ class _ChessClockState extends State<ChessClock> {
             child: Clock(
               time: _timePlayerOne,
               backgroundColor: _playerOneColor,
-              onTap:
-                  isPlayerOneTurn ? switchPlayer : () => _activeTimer?.cancel(),
+              onTap: isPlayerOneTurn ? switchPlayer : stopTimer,
             ),
           ),
         ),
@@ -102,8 +108,7 @@ class _ChessClockState extends State<ChessClock> {
           child: Clock(
             time: _timePlayerTwo,
             backgroundColor: _playerTwoColor,
-            onTap:
-                !isPlayerOneTurn ? switchPlayer : () => _activeTimer?.cancel(),
+            onTap: !isPlayerOneTurn ? switchPlayer : stopTimer,
           ),
         ),
       ],
