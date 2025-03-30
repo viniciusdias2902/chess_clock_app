@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:chess_clock_app/models/time.dart';
 import 'package:chess_clock_app/widgets/chess_clock/clock.dart';
-import 'package:chess_clock_app/widgets/chess_clock/clock_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ChessClock extends StatefulWidget {
   const ChessClock({super.key, required this.time});
@@ -95,26 +93,10 @@ class _ChessClockState extends State<ChessClock> {
             ),
           ),
         ),
-        Container(
-          decoration: BoxDecoration(color: Color.fromARGB(255, 40, 42, 54)),
-          padding: EdgeInsets.all(20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CLockIcon(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(
-                  'Chess Clock',
-                  style: GoogleFonts.tektur(
-                    color: Color.fromARGB(255, 255, 121, 198),
-                    fontSize: 30,
-                  ),
-                ),
-              ),
-              CLockIcon(),
-            ],
-          ),
+        Divider(
+          thickness: 10,
+          height: 10,
+          color: Color.fromARGB(255, 248, 248, 242),
         ),
         Expanded(
           child: Clock(

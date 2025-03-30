@@ -6,7 +6,7 @@ class CLockIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Icon(
       Icons.timer_rounded,
-      color: Color.fromARGB(255, 189, 147, 249),
+      color: Color.fromARGB(200, 40, 42, 54),
       size: 40,
     );
   }
